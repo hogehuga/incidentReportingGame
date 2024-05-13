@@ -1,0 +1,99 @@
+digraph cardtree{
+    node [shape=box];
+    rankdir=LR;
+
+    top [label="incident Cards"];
+
+    leak [label="情報漏洩"];
+    leakInternalfraud [label="内部不正"];
+    leakIntSettings [label="設定不備"];
+    leakIntVuln [label="脆弱性放置"];
+    leakIntImpersonation [label="なりすまし"];
+    leakExternalattack [label="外部攻撃"];
+    leakExtSettings [label="設定不備"];
+    leakExtVuln [label="脆弱性放置"];
+    leakExtRansomware [label="ransomware攻撃"];
+
+    dataDestruction [label="データ破壊"];
+    destructPC [label="端末破\n(暗号化等)"];
+    destructCI [label="データ侵害\n(完全性/機密性)"];
+
+    dos [label="サービス不可攻撃\n(DoS)"];
+    dosNetflood [label="ネットワーク攻撃\n(synflood等)"];
+    dosServerdown [label="サーバダウン"];
+    dosSvrVuln [label="脆弱性による攻撃"];
+    dosSvrPlatform [label="Platformへの攻撃\n(virtuarlizationへの攻撃等)"];
+    dosSvrFlood [label="サーバへのflood\n(thred飽和等)"];
+
+    top -> leak;
+    leak -> leakInternalfraud;
+    leak -> leakExternalattack;
+    leakInternalfraud -> leakIntSettings;
+    leakInternalfraud -> leakIntVuln;
+    leakInternalfraud -> leakIntImpersonation;
+    leakExternalattack -> leakExtSettings;
+    leakExternalattack -> leakExtVuln;
+    leakExternalattack -> leakExtRansomware;
+    top -> dataDestruction;
+    dataDestruction -> destructPC;
+    dataDestruction -> destructCI;
+    top -> dos;
+    dos -> dosNetflood;
+    dos -> dosServerdown;
+    dosServerdown -> dosSvrVuln;
+    dosServerdown -> dosSvrPlatform;
+    dosServerdown -> dosSvrFlood;
+
+    a [label="Difficulty: +3 point"];
+    aa [label="Action required:\l- target host forensic\l- Examining access logs"];
+    l [label="Difficulity: +3 point"];
+    ll [label="Action required:\l- victim host forensic\l- Examining Email access log\l- Examining fileserver access log\l- Examining web access log\l"];
+    g [label="Difficulity: +1 point"];
+
+    leakExtSettings->c;
+    leakExtVuln->d;
+    destructPC->e;
+    destructCI->f;
+    dosNetflood->g;
+    dosSvrVuln->h;
+    dosSvrPlatform->i;
+    dosSvrFlood->j;
+    leakIntSettings->a->aa;
+    leakIntVuln->k;
+    leakIntImpersonation->b;
+    leakExtRansomware->l->ll;
+    {rank=same;  a;b; c;d;e;f;g;h;i;j;k;}
+    {rank=same; aa;ll;}
+
+    action [label="action cards"];
+
+    examining [label="調査\n(examining)"];
+    accesslog;
+    email [label="Examining Email access log\n(メールログ調査)"];
+    fileserver [label="Examining fileserver access log\n(ファイルサーバログ調査)"];
+    web [label="Examining web access log\n(WEBアクセスログ調査)"];
+    emailCost [label="Cost: -8"];
+    filserverCost [label="Cost: -10"];
+    webCost [label="Cost: -8"];
+
+    forensic ;
+    forensicVictimhost [label="victim host forensic"];
+    forensicEmail [label="email service forensic"];
+    forensicVictimhostRequire [label="Require:\lExamining fileserver access log\lExamining web access log"];
+    forensicEmailRequire [label="Require:\lExamining Email access log"];
+
+    action -> examining;
+    examining -> accesslog;
+    accesslog -> email;
+    accesslog -> fileserver;
+    accesslog -> web;
+    email -> emailCost;
+    fileserver -> filserverCost;
+    web -> webCost;
+    action -> forensic;
+    forensic -> forensicVictimhost;
+    forensic -> forensicEmail;
+    forensicVictimhost -> forensicVictimhostRequire;
+    forensicEmail -> forensicEmailRequire;
+
+}o
