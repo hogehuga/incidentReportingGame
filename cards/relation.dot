@@ -1,5 +1,5 @@
 digraph relation {
-    graph [compound=true];
+    graph [fontname="MS UI Gothic", compound=true];
     node [shape=box];
     subgraph cluster00{
         label="チーム編成";

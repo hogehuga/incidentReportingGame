@@ -1,4 +1,5 @@
 digraph cardtree{
+    graph [fontname="MS UI Gothic"];
     node [shape=box];
     rankdir=LR;
 
