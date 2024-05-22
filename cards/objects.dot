@@ -1,0 +1,20 @@
+digraph class {
+    node [shape=box];
+    rankdir=LR;
+
+    subgraph cluster001{
+        label="Incidnet card";
+        incidnetProperty [label="Property:\l- Difficulity: (int)\l- RequreActionCard(s): (card name)\l"];
+        incidnetMethod [label="Method:\l- buy: none\l- sell: none\l- distribution: game startup time\l"];
+    }
+    subgraph cluster002{
+        label="Action card";
+        actionProperty [label="Property:\l- CardName: (string)\l- Cost: (int)\l- Buy Requirement Card: (card name)\l"];
+        actionMEthod [label="Method:\l- buy: Cost(int)\l- sell: none\l- distribution: game startup time\l"];
+    }
+    subgraph cluster003{
+        label="Situation card"
+        situationProperty [label="Property:\l- Situation name: (string)\l- RequireActionCard(s): (card name)\l- Bounus Cost: (int)\l"];
+        situationMethod [label="Method:\l- buy:drow time\l- sell: none\l- distribution: drow time\l"];
+    }
+}

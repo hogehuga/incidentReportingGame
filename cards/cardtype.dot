@@ -12,7 +12,7 @@ digraph cardtree{
     leakExternalattack [label="外部攻撃"];
     leakExtSettings [label="設定不備"];
     leakExtVuln [label="脆弱性放置"];
-    leakExtRansomware [label="ransomware攻撃"];
+    leakExtRansomware [label="ransomware攻撃", color=red];
 
     dataDestruction [label="データ破壊"];
     destructPC [label="端末破\n(暗号化等)"];
@@ -47,7 +47,7 @@ digraph cardtree{
     a [label="Difficulty: +3 point"];
     aa [label="Action required:\l- target host forensic\l- Examining access logs"];
     l [label="Difficulity: +3 point"];
-    ll [label="Action required:\l- victim host forensic\l- Examining Email access log\l- Examining fileserver access log\l- Examining web access log\l"];
+    ll [label="Action required:\l- victim host forensic\l- Examining Email access log\l- Examining fileserver access log\l- Examining web access log\l", color=red];
     g [label="Difficulity: +1 point"];
 
     leakExtSettings->c;
@@ -79,8 +79,10 @@ digraph cardtree{
     forensic ;
     forensicVictimhost [label="victim host forensic"];
     forensicEmail [label="email service forensic"];
-    forensicVictimhostRequire [label="Require:\lExamining fileserver access log\lExamining web access log"];
-    forensicEmailRequire [label="Require:\lExamining Email access log"];
+    forensicVictimhostRequire [label="Require:\l- Examining fileserver access log\l- Examining web access log\l"];
+    forensicVictimhostCost [label="Cost: -5"];
+    forensicEmailRequire [label="Require:\l- Examining Email access log\l"];
+    forensicEmailCost [label="Cost: -2"];
 
     action -> examining;
     examining -> accesslog;
@@ -95,5 +97,7 @@ digraph cardtree{
     forensic -> forensicEmail;
     forensicVictimhost -> forensicVictimhostRequire;
     forensicEmail -> forensicEmailRequire;
+    forensicVictimhostRequire -> forensicVictimhostCost;
+    forensicEmailRequire -> forensicEmailCost;
 
-}o
+}

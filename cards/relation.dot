@@ -1,0 +1,44 @@
+digraph relation {
+    graph [compound=true];
+    node [shape=box];
+    subgraph cluster00{
+        label="チーム編成";
+        createTeam [label="参加者で決定"];
+    } 
+    subgraph cluster01 {
+        label="初期カード配布";
+        distInitialcard;
+    }
+    subgraph cluster02 {
+        label="カードで状況決定";
+        distIncidentcard [label="チームごとに、インシデントカード配布"];
+        distSituationcard [label="状況カードの取得\n(コスト払って引く？\n必須？)"];
+    }
+    subgraph cluster03 {
+        label="インシデント対応";
+        response [label="対応の検討と実施"];
+        responseOrganized [label="状況の整理\l- コスト、環境の整理\l- 必要なアクションの整理\l"];
+        responseBuy [label="アクションカードの購入"];
+        responseFin [label="対応が完全に完了したか\n(コストさえ払えば完遂できる)"];
+        response -> responseOrganized [label="状況の把握"];
+        responseOrganized -> responseBuy [label="不足Actionの購入"];
+        responseBuy -> responseFin [label="判定"];
+        responseFin -> responseBuy [label="不足Actionの購入"];
+    }
+    subgraph cluster04 {
+        label="レポートの作成";
+        report [label="レポートの作成"];
+        reportTemplateOrganize [label="テンプレートを用い、項目をまとめる"]
+        report -> reportTemplateOrganize;
+    }
+    subgraph cluster05 {
+        label="評価";
+        eva [label="- コスト、難易度？で評価\l- レポートの質も評価？\l"];
+    }
+    createTeam -> distInitialcard [ltail=cluster00,lhead=cluster01];
+    distInitialcard -> distIncidentcard [latail=cluster01,lhead=cluster02];
+    distIncidentcard -> distSituationcard;
+    distSituationcard -> response [ltail=cluster02, lhead=cluster03];
+    responseFin -> report [ltail=cluster03,lhead=cluster04];
+    reportTemplateOrganize -> eva[ltail=cluster04,lhead=cluster05];
+}
